@@ -19,6 +19,6 @@ class MovieController extends Controller
         $rating = $request->query('rating', 7);
         $movies = $this->tmdbService->getMoviesByRating($rating);
 
-        return response()->json($movies);
+        return view('movies', ['movies' => $movies['results'] ?? []]);
     }
 }

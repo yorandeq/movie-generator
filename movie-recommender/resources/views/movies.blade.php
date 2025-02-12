@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movie List</title>
+    <title>Popular Movies</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -11,12 +11,17 @@
             color: white;
             text-align: center;
         }
+        .container {
+            margin-top: 20px;
+        }
+        .filter-container {
+            margin-bottom: 20px;
+        }
         .movie-container {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             gap: 20px;
-            margin-top: 20px;
         }
         .movie-card {
             background: #333;
@@ -48,10 +53,40 @@
             font-size: 14px;
             color: #FFD700;
         }
+        select {
+            padding: 8px;
+            font-size: 16px;
+        }
+        button {
+            padding: 8px 12px;
+            font-size: 16px;
+            margin-left: 10px;
+            cursor: pointer;
+            background-color: #FFD700;
+            border: none;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
-    <h1>Top Rated Movies</h1>
+    <h1>Most Popular Movies</h1>
+
+    <!-- Genre Filter -->
+    <div class="filter-container">
+        <form method="GET" action="{{ url('/') }}">
+            <label for="genre">Filter by Genre:</label>
+            <select name="genre" id="genre">
+                <option value="">All Genres</option>
+                @foreach ($genres as $genre)
+                    <option value="{{ $genre['id'] }}" {{ $selectedGenre == $genre['id'] ? 'selected' : '' }}>
+                        {{ $genre['name'] }}
+                    </option>
+                @endforeach
+            </select>
+            <button type="submit">Filter</button>
+        </form>
+    </div>
+
     <div class="movie-container">
         @foreach ($movies as $movie)
             <div class="movie-card">
